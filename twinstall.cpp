@@ -109,7 +109,6 @@ static int switch_to_legacy_properties()
 
 	return 0;
 }
-#endif
 
 static int switch_to_new_properties()
 {
@@ -124,6 +123,7 @@ static int switch_to_new_properties()
 
 	return 0;
 }
+#endif
 
 static int Install_Theme(const char* path, ZipWrap *Zip) {
 #ifdef TW_OEM_BUILD // We don't do custom themes in OEM builds
@@ -153,7 +153,6 @@ static int Install_Theme(const char* path, ZipWrap *Zip) {
 #endif
 }
 
-#ifndef TW_NO_LEGACY_PROPS
 static int Prepare_Update_Binary(const char *path, ZipWrap *Zip, int* wipe_cache) {
 	if (!Zip->ExtractEntry(ASSUMED_UPDATE_BINARY_NAME, TMP_UPDATER_BINARY_PATH, 0755)) {
 		Zip->Close();
@@ -178,6 +177,7 @@ static int Prepare_Update_Binary(const char *path, ZipWrap *Zip, int* wipe_cache
 	return INSTALL_SUCCESS;
 }
 
+#ifndef TW_NO_LEGACY_PROPS
 static bool update_binary_has_legacy_properties(const char *binary) {
 	const char str_to_match[] = "ANDROID_PROPERTY_WORKSPACE";
 	int len_to_match = sizeof(str_to_match) - 1;

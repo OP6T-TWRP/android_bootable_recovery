@@ -51,7 +51,7 @@ ifeq ($(TW_NEW_ION_HEAP), true)
   LOCAL_CFLAGS += -DNEW_ION_HEAP
 endif
 
-ifneq ($(wildcard external/libdrm/Android.*),)
+ifneq ($(wildcard external/libdrm/Android.mk),)
   LOCAL_CFLAGS += -DHAS_DRM
   LOCAL_SRC_FILES += graphics_drm.cpp
   ifneq ($(wildcard external/libdrm/Android.common.mk),)
@@ -59,6 +59,7 @@ ifneq ($(wildcard external/libdrm/Android.*),)
   else
     LOCAL_WHOLE_STATIC_LIBRARIES += libdrm
   endif
+endif
 ifneq ($(wildcard external/libdrm/Android.bp),)
   LOCAL_CFLAGS += -DHAS_DRM
   LOCAL_SRC_FILES += graphics_drm.cpp
