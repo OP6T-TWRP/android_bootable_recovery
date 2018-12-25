@@ -67,10 +67,12 @@ extern "C" {
 
 #define AB_OTA "payload_properties.txt"
 
+#ifndef TW_NO_LEGACY_PROPS
 static const char* properties_path = "/dev/__properties__";
 static const char* properties_path_renamed = "/dev/__properties_kk__";
 static bool legacy_props_env_initd = false;
 static bool legacy_props_path_modified = false;
+#endif
 
 enum zip_type {
 	UNKNOWN_ZIP_TYPE = 0,
@@ -79,6 +81,7 @@ enum zip_type {
 	TWRP_THEME_ZIP_TYPE
 };
 
+#ifndef TW_NO_LEGACY_PROPS
 // to support pre-KitKat update-binaries that expect properties in the legacy format
 static int switch_to_legacy_properties()
 {
@@ -106,6 +109,7 @@ static int switch_to_legacy_properties()
 
 	return 0;
 }
+#endif
 
 static int switch_to_new_properties()
 {
@@ -149,6 +153,7 @@ static int Install_Theme(const char* path, ZipWrap *Zip) {
 #endif
 }
 
+#ifndef TW_NO_LEGACY_PROPS
 static int Prepare_Update_Binary(const char *path, ZipWrap *Zip, int* wipe_cache) {
 	if (!Zip->ExtractEntry(ASSUMED_UPDATE_BINARY_NAME, TMP_UPDATER_BINARY_PATH, 0755)) {
 		Zip->Close();
@@ -205,6 +210,7 @@ static bool update_binary_has_legacy_properties(const char *binary) {
 
 	return found;
 }
+#endif
 
 static int Run_Update_Binary(const char *path, ZipWrap *Zip, int* wipe_cache, zip_type ztype) {
 	int ret_val, pipe_fd[2], status, zip_verify;
